@@ -40,6 +40,10 @@ class Author
   key :suffix, String
 
   many :authorships
+  
+  def full_name
+    [first_name, last_name, suffix].compact.join(" ").strip
+  end
 end
 
 class Authorship

@@ -8,6 +8,7 @@ class Report
       Book.all(:genres => top_genre, :order => "sortabletitle").each do |book|
         title(book)
         collections(book)
+        authors(book)
         genres(book)
         external_identifiers(book)
       end
@@ -38,6 +39,14 @@ class Report
       ownership = " *"
     end
     puts "h2. #{book.title}#{ownership}"
+    blank_line
+  end
+  
+  def authors(book)
+    authors_names = book.authorships.map do |authorship|
+      authorship.author.full_name
+    end
+    puts "by #{authors_names.join(", ")}"
     blank_line
   end
   
