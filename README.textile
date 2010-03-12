@@ -1,48 +1,32 @@
 h2. Long Ago in a Cliche Far, Far Away
 
-In 1988, I started to collect a database of all of the books that I owned. I
-did this in WordPerfect with Mail Merge.
+In 1988, I started to collect a database of all of the books that I owned. I did this in WordPerfect with Mail Merge.
 
-Fastforward to 2010. I've rewritten this database many times using SQL, Java,
-Swing, Ruby on Rails, with and without testing, with and without patterns. I
-now have three databases for books, movies, and tv shows that I own and have
-read/seen. My most successful version to date has been a Java Swing app which
-would store to PostgreSQL databases.  I was able to collect quite a bit of data this way.
+Fastforward to 2010. I've rewritten this database many times using SQL, Java, Swing, Ruby on Rails, with and without testing, with and without patterns. I now have three databases for books, movies, and tv shows that I own and have read/seen. My most successful version to date has been a Java Swing app which would store to PostgreSQL databases.  I was able to collect quite a bit of data this way. 
 
-I now want to do this in Ruby on Rails. However, I have a lot of data already
-in my PostgreSQL databases, and they are _not_ well designed for Rails, and
-refactoring them would be too easy. I _must_ learn other technologies as well!
-So I'm headed for Rails 3 and MongoDB. And CouchDB if I get bored.
+I now want to do this in Ruby on Rails. However, I have a lot of data already in my PostgreSQL databases, and they are _not_ well designed for Rails, and refactoring them would be too easy. I _must_ learn other technologies as well! So I'm headed for Rails 3 and MongoDB. And CouchDB if I get bored.
 
-You should follow "my blog":http://jdfrens.blogspot.com/, where I will be blogging about my exciting adventures.
+You should follow "my blog":http://jdfrens.blogspot.com/, where I will be blogging about my exciting adventures. 
 
 h2. What Will You Find Here?
 
-The code in this repository gets the data from my three PostgreSQL databases
-and transfers it into one MongoDB database. I use ActiveRecord to access my
-PostgreSQL databases. I use MongoMapper to access my MongoDB.
+The code in this repository gets the data from my three PostgreSQL databases and transfers it into one MongoDB database. I use ActiveRecord to access my PostgreSQL databases. I use MongoMapper to access my MongoDB.
 
-I have a reporting script that will generate Textile output so that I can see
-for myself that my MongoDB database has the data I think it should.
+I have a reporting script that will generate Textile output so that I can see for myself that my MongoDB database has the data I think it should.
 
 I may also have transfer and report scripts that work with CouchDB.
 
-Check out "my blog":http://jdfrens.blogspot.com/ which will point you to
-content based on topic.
+Check out "my blog":http://jdfrens.blogspot.com/ which will point you to content based on topic.
 
 h2. "What the Hell?  Where Are Your Frakking Tests?"
 
 Good question.  This is a spike and/or a one-off.
 
-It's a spike for me to play around with MongoDB and MongoMapper. As I get into
-the two, I get more curious about CouchDB and its Ruby wrappers.
+It's a spike for me to play around with MongoDB and MongoMapper. As I get into the two, I get more curious about CouchDB and its Ruby wrappers.
 
 It's a one-off for me to move my data from my PostgreSQL databases into a single MongoDB (or CouchDB) database.
 
-There will be one day when I run my transfer code one last time, and then
-never look at this code again. And, if to my surprise, I _do_ continue using
-this code, then my promise to you is that I will destroy this repository, and
-create a new one with tests.
+There will be one day when I run my transfer code one last time, and then never look at this code again. And, if to my surprise, I _do_ continue using this code, then my promise to you is that I will destroy this repository, and create a new one with tests.
 
 I may rant about this more on "my blog":http://jdfrens.blogspot.com/.
 
@@ -50,8 +34,7 @@ h2. "So Then Why Am I Looking at This Repository?"
 
 Perhaps you were referred here by "my blog":http://jdfrens.blogspot.com/.
 
-_I_ think you should look at this repository to tell me how badly I'm doing
-MongoDB, MongoMapper, and any other technology.
+_I_ think you should look at this repository to tell me how badly I'm doing MongoDB, MongoMapper, and any other technology.
 
 Also, if you're anything like me, you learn mostly and best from examples.  Here you go!  Here are some examples of MongoDB and MongoMapper.
 
