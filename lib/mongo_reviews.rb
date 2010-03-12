@@ -1,3 +1,5 @@
+require 'rubygems'
+
 require 'mongo_mapper'
 
 DATABASE = "reviews"

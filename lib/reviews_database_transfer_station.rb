@@ -25,6 +25,9 @@ class ReviewsDatabaseTranferStation
     each_book("adding media genre") do |book|
       book.genres << @media_genre
     end
+    add_to_books(Old::Characterization) do |book, old_characterization|
+      book.genres << old_characterization.genre.name
+    end
 
     @authors = process_basic_elements(Old::Author) do |the_old|
       Author.new(:first_name => the_old.fname,
@@ -78,7 +81,7 @@ class ReviewsDatabaseTranferStation
   private
   def each_book(message)
     print message
-    Book.all.each do |book|
+    @books.each do |id, book|
       yield book
       book.save!
       dot
