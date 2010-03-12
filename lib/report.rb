@@ -7,6 +7,7 @@ class Report
       header(top_genre)
       Book.all(:genres => top_genre, :order => "sortabletitle").each do |book|
         title(book)
+        collections(book)
         genres(book)
         external_identifiers(book)
       end
@@ -37,6 +38,13 @@ class Report
       ownership = " *"
     end
     puts "h2. #{book.title}#{ownership}"
+    blank_line
+  end
+  
+  def collections(book)
+    book.memberships.each do |membership|
+      puts "Book ##{membership.rank} in #{membership.compendium.name}"
+    end
     blank_line
   end
   
