@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby 
+
+$:.unshift(File.dirname(__FILE__) + "/../lib")
+
+require 'reviews_database_transfer_station'
+
+puts "dropping #{DATABASE} databse"
+connection.drop_database(DATABASE)
+["book", "tvshow", "movie"].each do |database|
+  puts "processing #{database} database"
+  ReviewsDatabaseTranferStation.new(database).process
+end
