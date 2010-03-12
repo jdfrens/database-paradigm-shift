@@ -1,8 +1,13 @@
 #!/usr/bin/env ruby 
 
+# Here's how I run this script:
+#   ./bin/report | redcloth > output/report.html
+#
+
 $:.unshift(File.dirname(__FILE__) + "/../lib")
 
 require 'mongo_reviews'
+require 'utils'
 
 ["book", "movie", "tvshow"].each do |top_genre|
   puts "h1. #{top_genre.pluralize.capitalize}\n\n"
@@ -10,8 +15,23 @@ require 'mongo_reviews'
     puts "h2. #{book.title}\n\n"
     genres = book.genres[1..-1]
     unless genres.empty?
-      puts "*genres:* #{genres.join(", ")}\n\n"
+      puts "*genres:* #{genres.join(", ")}"
+      blank_line
+    end
+    unless book.external_identifiers.empty?
+      book.external_identifiers.each do |identifier|
+        case identifier.kind
+        when "imdb"
+          puts "\"IMDb\":http://www.imdb.com/title/#{identifier.value}"
+        when "isbn"
+          puts "\"ISBN\":http://books.google.com/books?as_isbn=#{identifier.value}"
+        when "loc"
+          puts "\"LoC\":http://lccn.loc.gov/#{identifier.value}"
+        end
+        blank_line
+      end
     end
   end
-  puts "\n"
+  blank_line
+  puts "Generated at: #{Time.now.to_s}"
 end
