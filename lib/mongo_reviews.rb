@@ -17,19 +17,31 @@ class Book
 
   key :title, String
   key :sortabletitle, String
-  key :review, String
-  key :evaluation, String
   key :rating, Integer
   key :year, Integer
   key :genres, Array
   key :ownerships, Array
   key :membership_ids, Array
   key :read_dates, Array
-  key :external_identifiers, Array
 
   many :authorships
   many :external_identifiers
+  many :reviews
   many :memberships, :in => :membership_ids
+end
+
+class ExternalIdentifier
+  include MongoMapper::EmbeddedDocument
+  
+  key :kind, String
+  key :value, String
+end
+
+class Review
+  include MongoMapper::EmbeddedDocument
+  
+  key :kind, String
+  key :content, String
 end
 
 class Author
@@ -62,37 +74,6 @@ class Compendium
   
   key :name, String
 end
-
-# class Genre
-#   include MongoMapper::Document
-#   
-#   key :name, String
-# end
-
-class ReadDate
-  include MongoMapper::Document
-  
-  key :book_id, Mongo::ObjectID
-  key :date, Date
-  
-  belongs_to :book
-end
-
-class ExternalIdentifier
-  include MongoMapper::EmbeddedDocument
-  
-  key :kind, String
-  key :value, String
-end
-
-# class Ownership
-#   include MongoMapper::Document
-#   
-#   key :book_id, Mongo::ObjectID
-#   key :format, String
-#   
-#   belongs_to :book
-# end
 
 class Membership
   include MongoMapper::Document

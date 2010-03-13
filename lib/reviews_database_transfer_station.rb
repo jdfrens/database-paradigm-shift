@@ -17,8 +17,9 @@ class ReviewsDatabaseTranferStation
     @books = process_basic_elements(Old::Book) do |the_old|
       Book.new(:title => the_old.title,
                :sortabletitle => the_old.sortabletitle,
-               :review => the_old.review,
-               :evaluation => the_old.evaluation,
+               :reviews => [
+                 Review.new(:kind => "quick", :content => the_old.review),
+                 Review.new(:kind => "long", :content => the_old.evaluation)],
                :rating => the_old.rating,
                :year => the_old.year)
     end

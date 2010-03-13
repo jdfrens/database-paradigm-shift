@@ -12,8 +12,9 @@ class Report
         genres(book)
         external_identifiers(book)
       end
-      timestamp
-    end
+      blank_line
+    end  
+    timestamp
   end
   
   def textilize_identifier(identifier)
@@ -43,6 +44,7 @@ class Report
   end
   
   def authors(book)
+    return if book.authorships.length == 0
     authors_names = book.authorships.map do |authorship|
       authorship.author.full_name
     end
