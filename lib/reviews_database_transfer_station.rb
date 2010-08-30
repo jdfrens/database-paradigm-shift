@@ -10,21 +10,24 @@ require 'utils'
 class ReviewsDatabaseTranferStation
   def initialize(kind)
     ar_database(kind.pluralize)
-    @media_genre = kind
+    @media_kind = kind
   end
   
   def process()
     @books = process_basic_elements(Old::Book) do |the_old|
-      Book.new(:title => the_old.title,
-               :sortabletitle => the_old.sortabletitle,
-               :reviews => [
-                 Review.new(:kind => "quick", :content => the_old.review),
-                 Review.new(:kind => "long", :content => the_old.evaluation)],
-               :rating => the_old.rating,
+      book = Book.new(:title => the_old.title,
+               :sortable_title => the_old.sortabletitle,
+               :kind => @media_kind,
+               :rating => convert_rating(the_old.rating),
                :year => the_old.year)
-    end
-    each_book("adding media genre") do |book|
-      book.genres << @media_genre
+      unless the_old.review.blank?
+        book.comments << Comment.new(:kind => "quick", :content => the_old.review)
+      end
+      unless the_old.evaluation.blank?
+        book.comments << Comment.new(:kind => "long", :content => the_old.evaluation)
+      end
+      book.save!
+      book
     end
     add_to_books(Old::Characterization) do |book, old_characterization|
       book.genres << old_characterization.genre.name
@@ -36,12 +39,13 @@ class ReviewsDatabaseTranferStation
                  :suffix => the_old.suffix)
     end
 
-    @compendia = process_basic_elements(Old::Collection) do |the_old|
-      Compendium.new(:name => the_old.name)
+    @groupings = process_basic_elements(Old::Collection) do |the_old|
+      Grouping.new(:name => the_old.name)
     end
   
     add_to_books(Old::ReadDate) do |book, old_read_date|
-      book.read_dates << MongoMapper.time_class.parse(old_read_date.date.to_s)
+      date = old_read_date.date
+      book.readon_dates << ReadonDate.new(:month => date.month, :year => date.year)
     end
     
     add_to_books(Old::ExternalIdentifier) do |book, old_identifier|
@@ -69,9 +73,9 @@ class ReviewsDatabaseTranferStation
     print "Old::Membership"
     Old::Membership.all.each do |the_old|
       book = @books[the_old.book.id]
-      compendium = @compendia[the_old.collection.id]
+      grouping = @groupings[the_old.collection.id]
       membership = Membership.new(:rank => the_old.rank)
-      membership.compendium = compendium
+      membership.grouping = grouping
       book.memberships << membership
       book.save!
       dot
@@ -80,6 +84,39 @@ class ReviewsDatabaseTranferStation
   end
   
   private
+  def convert_rating(rating)
+    case rating
+    when 0
+      nil
+    when 1
+      -5
+    when 2
+      -4
+    when 3
+      -3
+    when 4
+      -2
+    when 5
+      -1
+    when 6
+      0
+    when 7
+      1
+    when 8
+      2
+    when 9
+      3
+    when 10
+      3
+    when 11
+      4
+    when 12
+      4
+    when 13
+      5
+    end
+  end
+  
   def each_book(message)
     print message
     @books.each do |id, book|

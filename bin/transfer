@@ -4,9 +4,13 @@ $:.unshift(File.dirname(__FILE__) + "/../lib")
 
 require 'reviews_database_transfer_station'
 
-puts "dropping #{DATABASE} databse"
+puts "dropping #{DATABASE} database"
 connection.drop_database(DATABASE)
 ["book", "tvshow", "movie"].each do |database|
   puts "processing #{database} database"
   ReviewsDatabaseTranferStation.new(database).process
 end
+
+puts 'use reading-during-recesss-development'
+puts 'db.dropDatabase()'
+puts 'db.copyDatabase("reviews", "reading-during-recess-development", "localhost")'
