@@ -6,7 +6,7 @@ class Book
   key :kind, String
   key :year, Integer
   key :rating, Integer, :within => -5..5, :allow_nil => true
-  key :genres, Array
+  key :tags, Array
   key :ownerships, Array
   many :readon_dates
   many :memberships

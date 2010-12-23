@@ -30,7 +30,7 @@ class ReviewsDatabaseTranferStation
       book
     end
     add_to_books(Old::Characterization) do |book, old_characterization|
-      book.genres << old_characterization.genre.name
+      book.tags << old_characterization.genre.name
     end
 
     @authors = process_basic_elements(Old::Author) do |the_old|

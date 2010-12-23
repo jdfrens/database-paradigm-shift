@@ -3,13 +3,13 @@ require 'utils'
 
 class Report
   def generate
-    ["book", "movie", "tvshow"].each do |top_genre|
-      header(top_genre)
-      Book.all(:genres => top_genre, :order => "sortabletitle").each do |book|
+    ["book", "movie", "tvshow"].each do |top_tag|
+      header(top_tag)
+      Book.all(:tags => top_tag, :order => "sortabletitle").each do |book|
         title(book)
         collections(book)
         authors(book)
-        genres(book)
+        tags(book)
         external_identifiers(book)
       end
       blank_line
@@ -29,8 +29,8 @@ class Report
   end
   
   private
-  def header(top_genre)
-    puts "h1. #{top_genre.pluralize.capitalize}"
+  def header(top_tag)
+    puts "h1. #{top_tag.pluralize.capitalize}"
     blank_line
   end
   
@@ -59,10 +59,10 @@ class Report
     blank_line
   end
   
-  def genres(book)
-    genres = book.genres[1..-1]
-    unless genres.empty?
-      puts "*genres:* #{genres.join(", ")}"
+  def tags(book)
+    tags = book.tags[1..-1]
+    unless tags.empty?
+      puts "*tags:* #{tags.join(", ")}"
       blank_line
     end
   end
